@@ -102,6 +102,7 @@ li {
     cursor: pointer;
     border-radius: 4px;
     margin-right: 5px;
+    margin-bottom: 5px;
 }
 
 .edit-btn:hover {
