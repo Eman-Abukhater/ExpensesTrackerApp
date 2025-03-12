@@ -53,17 +53,39 @@ function updateUI() {
 // Function to render an expense to the UI
 
 function renderExpense(expense) {
+    const li = document.createElement('li');
     li.innerHTML = `
-    ${expense.date} - ${expense.category} : $${expense.amount}
-    <div class="expense-actions">
-        <button class="edit-btn" data-id="${expense.id}">✏️</button>
-        <button class="delete-btn" data-id="${expense.id}">❌</button>
-    </div>
-`;
-expenseList.appendChild(li);
-
-    
+        ${expense.date} - ${expense.category} : $${expense.amount}
+        <div class="expense-actions">
+            <button class="edit-btn" data-id="${expense.id}">✏️</button>
+            <button class="delete-btn" data-id="${expense.id}">❌</button>
+        </div>
+    `;
+    expenseList.appendChild(li);
+      
 }
+
+
+// handle actions on the expense list
+
+function handleExpenseActions(e) {
+    const target = e.target;
+    const id = Number(target.dataset.id);
+
+    if (target.classList.contains('delete-btn')) {
+        expenses = expenses.filter((expense) => expense.id!== id);
+        updateUI();
+    } else if (target.classList.contains('edit-btn')) {
+        const expense = expenses.find((expense) => expense.id === id);
+        amountInput.value = expense.amount;
+        categoryInput.value = expense.category;
+        dateInput.value = expense.date;
+        editingId = id;
+        submitButton.textContent = "Update Expense";
+    }
+
+}
+
 
 // Function to save expenses to local storage
 function saveExpenseToLocalStorage() {
