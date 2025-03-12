@@ -7,6 +7,7 @@ const totalExpense = document.getElementById('total');
 const submitButton = document.getElementById("submit-btn");
 
 let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+let editingId = null; // Track ID of the expense being edited
 
 // Event listener for form submission
 submitButton.addEventListener('click', addExpense);
@@ -21,8 +22,18 @@ function addExpense(e) {
     const date = dateInput.value;
 
     // Validate input
-    if (!amount && !category && !category) {
-       
+    if (amount && category && category) {
+        if (editingID) {
+            // Update existing expense
+            expenses = expenses.map(expense => expense.id === editingId? {id: editingId, amount, category, date} : expense);
+            editingId = null;
+            submitButton.textContent = "Add Expense"; 
+            localStorage.setItem("expenses", JSON.stringify(expenses));
+
+        }
+        
+        // Add new expense
+        else {
             const newExpense = {
                 id: Date.now(),
                 amount,
@@ -33,20 +44,28 @@ function addExpense(e) {
             expenses.push(newExpense);
             localStorage.setItem("expenses", JSON.stringify(expenses));
 
-        
+        }
         
         // Clear input fields
         form.reset();
 
         // Update expense list
         updateUI();
-
-
-
-
-
-
     }
 
   
+}
+
+// Function to update the UI
+function updateUI() {
+    expenseList.innerHTML = "";
+    let total = 0;
+
+    expenses.forEach((expense) => {
+        total += parseFloat(expense.amount);
+        renderExpense(expense);
+    });
+
+    totalDisplay.textContent = total.toFixed(2);
+    saveExpenseToLocalStorage();
 }
