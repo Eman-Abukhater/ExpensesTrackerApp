@@ -53,6 +53,16 @@ function updateUI() {
 // Function to render an expense to the UI
 
 function renderExpense(expense) {
+    li.innerHTML = `
+    ${expense.date} - ${expense.category} : $${expense.amount}
+    <div class="expense-actions">
+        <button class="edit-btn" data-id="${expense.id}">✏️</button>
+        <button class="delete-btn" data-id="${expense.id}">❌</button>
+    </div>
+`;
+expenseList.appendChild(li);
+
+    
 }
 
 // Function to save expenses to local storage
