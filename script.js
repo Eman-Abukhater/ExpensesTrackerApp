@@ -15,57 +15,47 @@ submitButton.addEventListener('click', addExpense);
 // Function to add an expense to the list
 function addExpense(e) {
     e.preventDefault();
-
-    // Get input values
     const amount = amountInput.value.trim();
     const category = categoryInput.value.trim();
-    const date = dateInput.value;
+    const date = dateInput.value.trim();
 
-    // Validate input
-    if (amount && category && category) {
-        if (editingID) {
+    if (amount && category && date) {
+        if (editingId) {
             // Update existing expense
-            expenses = expenses.map(expense => expense.id === editingId? {id: editingId, amount, category, date} : expense);
-            editingId = null;
-            submitButton.textContent = "Add Expense"; 
-            localStorage.setItem("expenses", JSON.stringify(expenses));
-
-        }
-        
-        // Add new expense
-        else {
-            const newExpense = {
-                id: Date.now(),
-                amount,
-                category,
-                date
-            };
-
+            expenses = expenses.map((expense) =>
+                expense.id === editingId ? { id: editingId, amount, category, date } : expense
+            );
+            editingId = null; // Reset after update
+            submitButton.textContent = "Add Expense"; // Change button text back
+        } else {
+            // Add new expense
+            const newExpense = { id: Date.now(), amount, category, date };
             expenses.push(newExpense);
-            localStorage.setItem("expenses", JSON.stringify(expenses));
-
         }
-        
-        // Clear input fields
-        form.reset();
-
-        // Update expense list
         updateUI();
+        form.reset();
     }
-
-  
 }
-
 // Function to update the UI
 function updateUI() {
-    expenseList.innerHTML = "";
+    expenseList.innerHTML  = "";
     let total = 0;
 
     expenses.forEach((expense) => {
         total += parseFloat(expense.amount);
         renderExpense(expense);
     });
-
-    totalDisplay.textContent = total.toFixed(2);
+    totalExpense.textContent = total.toFixed(2);
     saveExpenseToLocalStorage();
+
+}
+
+// Function to render an expense to the UI
+
+function renderExpense(expense) {
+}
+
+// Function to save expenses to local storage
+function saveExpenseToLocalStorage() {
+    localStorage.setItem("expenses", JSON.stringify(expenses));
 }
