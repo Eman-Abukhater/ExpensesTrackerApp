@@ -1,3 +1,5 @@
+document.addEventListener("DOMContentLoaded", loadExpenses);
+
 const form = document.getElementById('expense-form');
 const amountInput = document.getElementById('amount');
 const categoryInput = document.getElementById('category');
@@ -9,8 +11,10 @@ const submitButton = document.getElementById("submit-btn");
 let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
 let editingId = null; // Track ID of the expense being edited
 
-// Event listener for form submission
+// Event listener f
 submitButton.addEventListener('click', addExpense);
+expenseList.addEventListener("click", handleExpenseActions);
+
 
 // Function to add an expense to the list
 function addExpense(e) {
@@ -90,4 +94,9 @@ function handleExpenseActions(e) {
 // Function to save expenses to local storage
 function saveExpenseToLocalStorage() {
     localStorage.setItem("expenses", JSON.stringify(expenses));
+}
+
+
+function loadExpenses() {
+    updateUI(); 
 }
