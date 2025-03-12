@@ -97,6 +97,7 @@ li {
 .edit-btn {
     color: #333;
     border: none;
+    color: white;
     padding: 5px;
     cursor: pointer;
     border-radius: 4px;

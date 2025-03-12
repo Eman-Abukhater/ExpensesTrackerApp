@@ -61,8 +61,8 @@ function renderExpense(expense) {
     li.innerHTML = `
         ${expense.date} - ${expense.category} : $${expense.amount}
         <div class="expense-actions">
-            <button class="edit-btn" data-id="${expense.id}">✏️</button>
-            <button class="delete-btn" data-id="${expense.id}">❌</button>
+            <button class="edit-btn" data-id="${expense.id}">Edit</button>
+            <button class="delete-btn" data-id="${expense.id}">Delete</button>
         </div>
     `;
     expenseList.appendChild(li);
